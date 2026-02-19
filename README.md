@@ -1,152 +1,163 @@
-# ZameenHub.pk - Real Estate Platform
+---
 
-A comprehensive real estate platform connecting property dealers with potential buyers and renters across Pakistan.
+# 🏠 LegacyEstate – Premium Real Estate Platform
 
-## Features
+[![Built with Next.js](https://img.shields.io/badge/Next.js-16-blue?style=flat-square&logo=nextdotjs)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-blue?style=flat-square&logo=react)](https://reactjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-v4-blue?style=flat-square&logo=tailwind-css)](https://tailwindcss.com/)
+[![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-green?style=flat-square&logo=supabase)](https://supabase.com/)
+[![License](https://img.shields.io/badge/License-CipherDevs-blue?style=flat-square)](#license)
 
-### Authentication System
-- **User Registration/Login**: Secure email and password-based authentication
-- **User Types**:
-  - **Regular Users**: Browse listings, save favorites, and contact dealers
-  - **Dealer Users**: Full listing management capabilities (upload/delete properties)
-  - **Admin Users**: Approve/reject listings and manage platform
+**LegacyEstate** is a modern, feature-rich real estate platform connecting property owners, dealers, and potential buyers or renters across Pakistan.
 
-### Property Listing Features
-- **Property Types**: House, Apartment, Plot, Commercial
-- **Property Details**: Bedrooms, bathrooms, furnishing status, price, location
-- **Image Gallery**: Multiple photo uploads per property listing
-- **Status Tracking**: Available/Sold/Rented status
+---
 
-### Search & Discovery
-- **Advanced Filtering**:
-  - Property type (house, apartment, plot, commercial)
-  - City and area
-  - Price range
-  - Number of bedrooms
-  - Furnishing status
-- **Sorting Options**: Price (low to high, high to low), date posted
-- **Mobile-Responsive Design**: Optimized for all devices
+## 🌟 Features
 
-### Communication Tools
-- **Contact Button**: Reveals dealer phone numbers to interested users
-- **User Profiles**: Professional dealer profile pages with bio and agency information
-- **Favorites**: Save properties for later viewing
+### 🔒 Authentication & User Management
 
-### Administrative Features
-- **Listing Approval**: Admin review and approval system for new listings
-- **Content Management**: Edit/delete functionality for dealers and admins
+- Secure **email/password login**
+- **Roles**:
+  - 👤 **Regular Users** – Browse listings, save favorites, contact dealers
+  - 🏢 **Dealer Users** – Manage listings (add/edit/delete)
+  - 🛡 **Admin Users** – Approve/reject listings, manage content
 
-## Tech Stack
+### 🏡 Property Listings
 
-- **Frontend**: Next.js 16, React 19, TypeScript
-- **Styling**: Tailwind CSS v4
-- **Backend**: Supabase (PostgreSQL)
-- **Authentication**: Supabase Auth
-- **Storage**: Supabase Storage (for property images)
+- Types: **House, Apartment, Plot, Commercial**
+- Detailed info: bedrooms, bathrooms, furnishing, price, location
+- Multiple images per listing 📸
+- Status tracking: **Available / Sold / Rented**
 
-## Getting Started
+### 🔍 Search & Discovery
+
+- Advanced filtering: property type, city, area, price, bedrooms, furnishing
+- Sorting options: price (low → high, high → low), latest listings
+- Fully **responsive design** for all devices 📱💻
+
+### 📞 Communication
+
+- Direct dealer contact via **phone/email**
+- User & dealer profiles with agency info 🏢
+- Save properties as **favorites** ❤️
+
+### 🛠 Administration
+
+- Listing approvals by admin ✅
+- Content management for dealers and admins ✏️🗑
+
+---
+
+## 🛠 Tech Stack
+
+| Layer    | Technology                       |
+| -------- | -------------------------------- |
+| Frontend | Next.js 16, React 19, TypeScript |
+| Styling  | Tailwind CSS v4                  |
+| Backend  | Supabase (PostgreSQL)            |
+| Auth     | Supabase Auth                    |
+| Storage  | Supabase Storage (images)        |
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js 18+ installed
-- Supabase account configured
+
+- Node.js 18+
+- Supabase account
 
 ### Installation
 
-1. Clone the repository and navigate to the project:
 ```bash
-cd zameenhub
-```
+# Clone the repo
+git clone https://github.com/CipherDevsLabs/LegacyEstate.git
+cd LegacyEstate
 
-2. Install dependencies:
-```bash
+# Install dependencies
 npm install
-```
 
-3. Environment variables are already configured in `.env.local`
+# Create .env.local with your Supabase keys
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
 
-4. Run the development server:
-```bash
+# Start dev server
 npm run dev
 ```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Project Structure
+---
+
+## 📂 Project Structure
 
 ```
-zameenhub/
+LegacyEstate/
 ├── src/
 │   ├── app/
-│   │   ├── page.tsx                 # Home page with property listings
-│   │   ├── login/                   # Login page
-│   │   ├── signup/                  # Signup page
-│   │   ├── properties/
-│   │   │   ├── [id]/               # Property detail page
-│   │   │   └── new/                # Add new property form
-│   │   ├── dashboard/              # Dealer dashboard
-│   │   ├── admin/                  # Admin panel
-│   │   └── profile/                # User profile page
-│   ├── components/
-│   │   ├── Navbar.tsx              # Navigation bar
-│   │   ├── PropertyCard.tsx        # Property listing card
-│   │   └── PropertyFilters.tsx     # Search and filter component
-│   ├── lib/
-│   │   ├── supabase/               # Supabase client configuration
-│   │   └── auth.ts                 # Authentication utilities
-│   └── types/
-│       └── database.types.ts       # TypeScript types for database
+│   │   ├── page.tsx       # Home page
+│   │   ├── login/         # Login
+│   │   ├── signup/        # Signup
+│   │   ├── properties/    # Property details & new
+│   │   ├── dashboard/     # Dealer dashboard
+│   │   ├── admin/         # Admin panel
+│   │   └── profile/       # User profile
+│   ├── components/        # Reusable UI components
+│   ├── lib/               # Supabase client & auth utilities
+│   └── types/             # TypeScript types
 ```
 
-## User Roles
+---
 
-### Regular User
-- Browse all approved properties
-- Save properties to favorites
-- Contact dealers (reveals phone number)
-- View dealer profiles
+## 👥 User Roles
 
-### Dealer
-- All Regular User features
-- Add new property listings
-- Manage own properties (edit/delete)
-- View property status and approval status
-- Update profile with agency information
+| Role             | Capabilities                                                         |
+| ---------------- | -------------------------------------------------------------------- |
+| **Regular User** | Browse approved listings, save favorites, contact dealers            |
+| **Dealer**       | All Regular features + add/edit/delete properties, view status       |
+| **Admin**        | All Dealer features + approve/reject listings, manage all properties |
 
-### Admin
-- All Dealer features
-- Approve or reject property listings
-- View all properties (pending, approved, rejected)
-- Delete any property
+---
 
-## Build & Deploy
+## ⚡ Build & Deployment
 
-### Build for production:
+### Build for production
+
 ```bash
 npm run build
 npm start
 ```
 
-### Deploy to Vercel:
+### Deploy to Vercel
+
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
 
-## Database Schema
+---
 
-### Tables
-- **profiles**: User profile information (extends auth.users)
-- **properties**: Property listings with all details
-- **property_images**: Multiple images per property
-- **contacts**: Tracks when users contact dealers
-- **favorites**: User saved properties
+## 🗄 Database Schema
 
-### Security
-- Row Level Security (RLS) enabled on all tables
-- Secure storage policies for image uploads
-- Role-based access control (user, dealer, admin)
+- **profiles** – User profile info
+- **properties** – Property listings
+- **property_images** – Multiple images per property
+- **contacts** – Track user-dealer communications
+- **favorites** – Saved properties
 
-## License
+**Security:**
 
-Developed by TheCloudShadow.com for ZameenHub.pk
+- Row Level Security (RLS) enabled
+- Role-based access control: user, dealer, admin
+- Secure image storage
 
-## Support
+---
 
-For support, email contact@thecloudshadow.com
+## 📜 License
+
+Developed by **CipherDevs** for **LegacyEstate**
+
+---
+
+## 📧 Support
+
+For questions or issues, contact: **[infocipherdevs@gmail.com](mailto:infocipherdevs@gmail.com)**
+
+---
