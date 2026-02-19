@@ -2,7 +2,7 @@ export default function TestPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold text-gray-900 mb-4">
-        Test Page - ZameenHub
+        Test Page - LegacyEstate
       </h1>
       <p className="text-lg text-gray-600">
         If you can see this page, Next.js is working correctly!
@@ -13,5 +13,5 @@ export default function TestPage() {
         <p className="text-gray-700">✅ Routing: Working</p>
       </div>
     </div>
-  )
+  );
 }

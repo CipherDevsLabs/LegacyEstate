@@ -1,4 +1,4 @@
--- ZameenHub Database Schema
+-- LegacyEstate Database Schema
 -- Drop existing tables if any (CASCADE will drop dependent objects)
 DROP TABLE IF EXISTS public.property_images CASCADE;
 DROP TABLE IF EXISTS public.properties CASCADE;

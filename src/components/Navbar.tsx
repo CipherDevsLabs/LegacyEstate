@@ -82,7 +82,7 @@ export default function Navbar() {
             <Link href="/" className="flex items-center group">
               <Image
                 src="/z-logo-1.jpg"
-                alt="ZameenHub Logo"
+                alt="LegacyEstate Logo"
                 width={120}
                 height={48}
                 className="h-16 w-auto"

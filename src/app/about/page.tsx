@@ -17,7 +17,7 @@ export default function AboutPage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28">
           <div className="text-center">
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6">
-              About ZameenHub.pk
+              About LegacyEstate.pk
               <span className="block text-white/90 mt-2">
                 Your Trusted Real Estate Partner
               </span>
@@ -54,9 +54,9 @@ export default function AboutPage() {
                 Our Story
               </h2>
               <p className="text-lg text-[#767676] mb-4">
-                ZameenHub.pk was founded with a simple yet powerful vision: to
-                revolutionize the real estate market in Pakistan by creating a
-                transparent, efficient, and trustworthy platform that connects
+                LegacyEstate.pk was founded with a simple yet powerful vision:
+                to revolutionize the real estate market in Pakistan by creating
+                a transparent, efficient, and trustworthy platform that connects
                 property seekers with verified dealers.
               </p>
               <p className="text-lg text-[#767676] mb-4">
@@ -369,7 +369,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-[#444444] mb-4">
-              Why Choose ZameenHub?
+              Why Choose LegacyEstate?
             </h2>
             <p className="text-lg text-[#767676] max-w-2xl mx-auto">
               We go above and beyond to ensure your real estate journey is
@@ -470,7 +470,7 @@ export default function AboutPage() {
           </h2>
           <p className="text-xl text-white/90 mb-10 max-w-2xl mx-auto">
             Join thousands of satisfied customers who found their dream
-            properties with ZameenHub
+            properties with LegacyEstate
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

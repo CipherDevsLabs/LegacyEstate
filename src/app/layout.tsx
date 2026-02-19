@@ -16,7 +16,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "ZameenHub.pk - Find Your Dream Property",
-  description: "Pakistan's premier real estate platform connecting property dealers with buyers and renters",
+  description:
+    "Pakistan's premier real estate platform connecting property dealers with buyers and renters",
 };
 
 export default function RootLayout({
@@ -28,16 +29,21 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap"
+          rel="stylesheet"
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Navbar />
-        <main className="min-h-screen bg-[#f5f5f5]">
-          {children}
-        </main>
+        <main className="min-h-screen bg-[#f5f5f5]">{children}</main>
         <Footer />
       </body>
     </html>

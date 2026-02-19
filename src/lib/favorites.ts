@@ -1,10 +1,10 @@
 // Utility functions for managing favorites (both localStorage and database)
 
-const FAVORITES_KEY = 'zameenhub_favorites';
+const FAVORITES_KEY = "LegacyEstate_favorites";
 
 // Get favorites from localStorage for anonymous users
 export function getLocalFavorites(): string[] {
-  if (typeof window === 'undefined') return [];
+  if (typeof window === "undefined") return [];
 
   try {
     const stored = localStorage.getItem(FAVORITES_KEY);
@@ -16,7 +16,7 @@ export function getLocalFavorites(): string[] {
 
 // Add favorite to localStorage
 export function addLocalFavorite(propertyId: string): void {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
 
   const favorites = getLocalFavorites();
   if (!favorites.includes(propertyId)) {
@@ -27,10 +27,10 @@ export function addLocalFavorite(propertyId: string): void {
 
 // Remove favorite from localStorage
 export function removeLocalFavorite(propertyId: string): void {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
 
   const favorites = getLocalFavorites();
-  const filtered = favorites.filter(id => id !== propertyId);
+  const filtered = favorites.filter((id) => id !== propertyId);
   localStorage.setItem(FAVORITES_KEY, JSON.stringify(filtered));
 }
 
@@ -41,14 +41,14 @@ export function isLocalFavorite(propertyId: string): boolean {
 
 // Clear local favorites (used after migration to database)
 export function clearLocalFavorites(): void {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
   localStorage.removeItem(FAVORITES_KEY);
 }
 
 // Migrate localStorage favorites to database
 export async function migrateLocalFavoritesToDatabase(
   supabase: any,
-  userId: string
+  userId: string,
 ): Promise<void> {
   const localFavorites = getLocalFavorites();
 
@@ -57,30 +57,30 @@ export async function migrateLocalFavoritesToDatabase(
   try {
     // Get existing favorites from database
     const { data: existingFavorites } = await supabase
-      .from('favorites')
-      .select('property_id')
-      .eq('user_id', userId);
+      .from("favorites")
+      .select("property_id")
+      .eq("user_id", userId);
 
     const existingIds = new Set(
-      existingFavorites?.map((f: any) => f.property_id) || []
+      existingFavorites?.map((f: any) => f.property_id) || [],
     );
 
     // Filter out favorites that already exist in database
     const newFavorites = localFavorites
-      .filter(propertyId => !existingIds.has(propertyId))
-      .map(propertyId => ({
+      .filter((propertyId) => !existingIds.has(propertyId))
+      .map((propertyId) => ({
         user_id: userId,
         property_id: propertyId,
       }));
 
     // Insert new favorites
     if (newFavorites.length > 0) {
-      await supabase.from('favorites').insert(newFavorites);
+      await supabase.from("favorites").insert(newFavorites);
     }
 
     // Clear localStorage after successful migration
     clearLocalFavorites();
   } catch (error) {
-    console.error('Error migrating favorites:', error);
+    console.error("Error migrating favorites:", error);
   }
 }

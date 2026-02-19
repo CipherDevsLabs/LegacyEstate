@@ -1,29 +1,32 @@
-import { createClient as createSupabaseClient, SupabaseClient } from '@supabase/supabase-js'
-import { Database } from '@/types/database.types'
+import {
+  createClient as createSupabaseClient,
+  SupabaseClient,
+} from "@supabase/supabase-js";
+import { Database } from "@/types/database.types";
 
 // Custom storage that ONLY uses localStorage, never cookies
 const customStorageAdapter = {
   getItem: (key: string) => {
-    if (typeof window === 'undefined') return null
-    return window.localStorage.getItem(key)
+    if (typeof window === "undefined") return null;
+    return window.localStorage.getItem(key);
   },
   setItem: (key: string, value: string) => {
-    if (typeof window === 'undefined') return
-    window.localStorage.setItem(key, value)
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem(key, value);
   },
   removeItem: (key: string) => {
-    if (typeof window === 'undefined') return
-    window.localStorage.removeItem(key)
+    if (typeof window === "undefined") return;
+    window.localStorage.removeItem(key);
   },
-}
+};
 
 // Singleton instance
-let supabaseInstance: SupabaseClient<Database> | null = null
+let supabaseInstance: SupabaseClient<Database> | null = null;
 
 export function createClient() {
   // Return existing instance if it exists
   if (supabaseInstance) {
-    return supabaseInstance
+    return supabaseInstance;
   }
 
   // Create new instance only if it doesn't exist
@@ -33,13 +36,13 @@ export function createClient() {
     {
       auth: {
         storage: customStorageAdapter,
-        storageKey: 'zameenhub-auth',
+        storageKey: "LegacyEstate-auth",
         autoRefreshToken: true,
         persistSession: true,
         detectSessionInUrl: true,
       },
-    }
-  )
+    },
+  );
 
-  return supabaseInstance
+  return supabaseInstance;
 }
