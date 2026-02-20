@@ -23,8 +23,8 @@ export default function AboutPage() {
               </span>
             </h1>
             <p className="mt-6 max-w-3xl mx-auto text-xl sm:text-2xl text-white/90">
-              Connecting property seekers with verified dealers across Pakistan
-              since day one
+              Connecting property seekers with verified dealers across UK since
+              day one
             </p>
           </div>
         </div>
@@ -55,8 +55,8 @@ export default function AboutPage() {
               </h2>
               <p className="text-lg text-[#767676] mb-4">
                 LegacyEstate.pk was founded with a simple yet powerful vision:
-                to revolutionize the real estate market in Pakistan by creating
-                a transparent, efficient, and trustworthy platform that connects
+                to revolutionize the real estate market in UK by creating a
+                transparent, efficient, and trustworthy platform that connects
                 property seekers with verified dealers.
               </p>
               <p className="text-lg text-[#767676] mb-4">
@@ -66,9 +66,9 @@ export default function AboutPage() {
                 user experience above all else.
               </p>
               <p className="text-lg text-[#767676]">
-                Today, we're proud to serve thousands of customers across
-                Pakistan, helping them find their dream properties while
-                empowering dealers to grow their businesses.
+                Today, we're proud to serve thousands of customers across UK,
+                helping them find their dream properties while empowering
+                dealers to grow their businesses.
               </p>
             </div>
             <div className="relative">
@@ -145,9 +145,9 @@ export default function AboutPage() {
                 Our Vision
               </h3>
               <p className="text-[#767676] leading-relaxed">
-                To become Pakistan's most trusted and innovative real estate
-                platform, setting new standards for transparency, reliability,
-                and customer satisfaction in the property market.
+                To become UK's most trusted and innovative real estate platform,
+                setting new standards for transparency, reliability, and
+                customer satisfaction in the property market.
               </p>
             </div>
           </div>
@@ -281,7 +281,7 @@ export default function AboutPage() {
               Our Impact in Numbers
             </h2>
             <p className="text-xl text-white/90">
-              Making a difference in Pakistan's real estate market
+              Making a difference in UK's real estate market
             </p>
           </div>
 
@@ -314,7 +314,7 @@ export default function AboutPage() {
             </h2>
             <p className="text-lg text-[#767676] max-w-2xl mx-auto">
               Passionate professionals dedicated to transforming real estate in
-              Pakistan
+              UK
             </p>
           </div>
 

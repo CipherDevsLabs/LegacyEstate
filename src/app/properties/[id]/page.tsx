@@ -285,7 +285,7 @@ export default function PropertyDetailPage() {
   const formatPhoneForWhatsApp = (phone: string) => {
     // Remove all non-digit characters
     let cleaned = phone.replace(/\D/g, "");
-    // If it starts with 0, replace with 92 (Pakistan country code)
+    // If it starts with 0, replace with 92 (UK country code)
     if (cleaned.startsWith("0")) {
       cleaned = "92" + cleaned.substring(1);
     }

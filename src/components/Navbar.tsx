@@ -81,7 +81,7 @@ export default function Navbar() {
           <div className="flex items-center">
             <Link href="/" className="flex items-center group">
               <Image
-                src="/z-logo-1.jpg"
+                src="/z-logo.jpg"
                 alt="LegacyEstate Logo"
                 width={120}
                 height={48}

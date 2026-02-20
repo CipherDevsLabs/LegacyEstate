@@ -88,8 +88,7 @@ export default function SignupPage() {
               Join LegacyEstate!
             </h1>
             <p className="text-xl text-white/90 mb-8">
-              Start your real estate journey with Pakistan's most trusted
-              platform
+              Start your real estate journey with UK's most trusted platform
             </p>
             <div className="space-y-6">
               <div className="flex items-start space-x-3">

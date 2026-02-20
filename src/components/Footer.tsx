@@ -13,13 +13,12 @@ export default function Footer() {
           {/* Company Info */}
           <div>
             <div className="mb-4">
-              <span className="text-2xl font-bold text-[#33a137]">Zameen</span>
-              <span className="text-2xl font-light text-white">Hub</span>
-              <span className="text-sm font-medium text-gray-400">.pk</span>
+              <span className="text-2xl font-bold text-[#33a137]">Legacy</span>
+              <span className="text-2xl font-light text-white">Estate</span>
             </div>
             <p className="text-sm text-gray-300 leading-relaxed mb-4">
-              Pakistan's premier real estate platform connecting property
-              dealers with buyers and renters.
+              UK's premier real estate platform connecting property dealers with
+              buyers and renters.
             </p>
             <div className="flex space-x-4">
               <a
@@ -157,7 +156,7 @@ export default function Footer() {
                     d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                   ></path>
                 </svg>
-                <span className="text-sm text-gray-300">+92-XXX-XXXXXXX</span>
+                <span className="text-sm text-gray-300">+44-XXX-XXXXXXX</span>
               </li>
               <li className="flex items-start">
                 <svg
@@ -197,7 +196,7 @@ export default function Footer() {
                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                   ></path>
                 </svg>
-                <span className="text-sm text-gray-300">Pakistan</span>
+                <span className="text-sm text-gray-300">UK</span>
               </li>
             </ul>
           </div>

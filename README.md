@@ -8,7 +8,7 @@
 [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-green?style=flat-square&logo=supabase)](https://supabase.com/)
 [![License](https://img.shields.io/badge/License-CipherDevs-blue?style=flat-square)](#license)
 
-**LegacyEstate** is a modern, feature-rich real estate platform connecting property owners, dealers, and potential buyers or renters across Pakistan.
+**LegacyEstate** is a modern, feature-rich real estate platform connecting property owners, dealers, and potential buyers or renters across UK.
 
 ---
 

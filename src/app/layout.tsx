@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ZameenHub.pk - Find Your Dream Property",
+  title: "LegacyEstate - Find Your Dream Property",
   description:
-    "Pakistan's premier real estate platform connecting property dealers with buyers and renters",
+    "UK's premier real estate platform connecting property dealers with buyers and renters",
 };
 
 export default function RootLayout({
