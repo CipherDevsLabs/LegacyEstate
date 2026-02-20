@@ -14,7 +14,11 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 import { Database } from "@/types/database.types";
-import { isLocalFavorite, addLocalFavorite, removeLocalFavorite } from "@/lib/favorites";
+import {
+  isLocalFavorite,
+  addLocalFavorite,
+  removeLocalFavorite,
+} from "@/lib/favorites";
 
 type Property = Database["public"]["Tables"]["properties"]["Row"] & {
   property_images: { image_url: string; display_order: number }[];
@@ -52,7 +56,7 @@ export default function PropertyDetailPage() {
         *,
         property_images(image_url, display_order),
         profiles!properties_user_id_fkey(full_name, phone, agency_name, bio)
-      `
+      `,
       )
       .eq("id", propertyId)
       .single();
@@ -87,7 +91,7 @@ export default function PropertyDetailPage() {
   };
 
   const handleUpdateStatus = async (
-    newStatus: "available" | "sold" | "rented"
+    newStatus: "available" | "sold" | "rented",
   ) => {
     if (!property || updatingStatus) return;
     setUpdatingStatus(newStatus);
@@ -111,7 +115,7 @@ export default function PropertyDetailPage() {
       }
       // Update local state
       setProperty((prev) =>
-        prev ? ({ ...prev, status: newStatus } as Property) : prev
+        prev ? ({ ...prev, status: newStatus } as Property) : prev,
       );
       setUpdatingStatus(false);
     } catch {
@@ -123,7 +127,7 @@ export default function PropertyDetailPage() {
   const handleDelete = async () => {
     if (!property || deleting) return;
     const confirmText = window.prompt(
-      "Type DELETE to confirm you want to permanently remove this listing."
+      "Type DELETE to confirm you want to permanently remove this listing.",
     );
     if (confirmText !== "DELETE") {
       if (confirmText !== null) {
@@ -270,7 +274,7 @@ export default function PropertyDetailPage() {
   }
 
   const images = property.property_images.sort(
-    (a, b) => a.display_order - b.display_order
+    (a, b) => a.display_order - b.display_order,
   );
   const mainImage =
     images[selectedImage]?.image_url || "/placeholder-property.svg";
@@ -280,23 +284,25 @@ export default function PropertyDetailPage() {
   // Format phone number for WhatsApp (remove spaces, dashes, and ensure it starts with country code)
   const formatPhoneForWhatsApp = (phone: string) => {
     // Remove all non-digit characters
-    let cleaned = phone.replace(/\D/g, '');
+    let cleaned = phone.replace(/\D/g, "");
     // If it starts with 0, replace with 92 (Pakistan country code)
-    if (cleaned.startsWith('0')) {
-      cleaned = '92' + cleaned.substring(1);
+    if (cleaned.startsWith("0")) {
+      cleaned = "92" + cleaned.substring(1);
     }
     // If it doesn't start with country code, add 92
-    if (!cleaned.startsWith('92')) {
-      cleaned = '92' + cleaned;
+    if (!cleaned.startsWith("92")) {
+      cleaned = "92" + cleaned;
     }
     return cleaned;
   };
 
   const whatsappNumber = ownerPhone ? formatPhoneForWhatsApp(ownerPhone) : null;
   const whatsappMessage = encodeURIComponent(
-    `Hi, I'm interested in this property: ${property.title}\n\nProperty Link: ${typeof window !== 'undefined' ? window.location.href : ''}`
+    `Hi, I'm interested in this property: ${property.title}\n\nProperty Link: ${typeof window !== "undefined" ? window.location.href : ""}`,
   );
-  const whatsappUrl = whatsappNumber ? `https://wa.me/${whatsappNumber}?text=${whatsappMessage}` : null;
+  const whatsappUrl = whatsappNumber
+    ? `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`
+    : null;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -430,7 +436,7 @@ export default function PropertyDetailPage() {
               </div>
             )}
             <p className="text-2xl sm:text-3xl font-bold text-blue-600 mb-4">
-              PKR {property.price?.toLocaleString()}
+              GBP {property.price?.toLocaleString()}
             </p>
 
             <div className="flex items-center gap-6 mb-6 text-gray-600">

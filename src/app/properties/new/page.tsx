@@ -1,56 +1,58 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
-import { isApprovedDealerClient } from '@/lib/auth.client' // Import isApprovedDealerClient from the new client-side file
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
+import { isApprovedDealerClient } from "@/lib/auth.client"; // Import isApprovedDealerClient from the new client-side file
 
 export default function NewPropertyPage() {
-  const router = useRouter()
-  const [loading, setLoading] = useState(false)
-  const [pageLoading, setPageLoading] = useState(true) // New state for page loading
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true); // New state for page loading
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    property_type: 'house' as 'house' | 'apartment' | 'plot' | 'commercial',
-    price: '',
-    city: '',
-    area: '',
-    address: '',
-    bedrooms: '',
-    bathrooms: '',
-    furnishing: '' as '' | 'furnished' | 'semi-furnished' | 'unfurnished',
-  })
-  const [images, setImages] = useState<File[]>([])
+    title: "",
+    description: "",
+    property_type: "house" as "house" | "apartment" | "plot" | "commercial",
+    price: "",
+    city: "",
+    area: "",
+    address: "",
+    bedrooms: "",
+    bathrooms: "",
+    furnishing: "" as "" | "furnished" | "semi-furnished" | "unfurnished",
+  });
+  const [images, setImages] = useState<File[]>([]);
 
   useEffect(() => {
     async function checkAuthorization() {
-      const approvedDealer = await isApprovedDealerClient() // Use the client-side helper
+      const approvedDealer = await isApprovedDealerClient(); // Use the client-side helper
       if (!approvedDealer) {
-        alert('You must be an approved dealer to add new properties.')
-        router.push('/') // Redirect unauthorized users
+        alert("You must be an approved dealer to add new properties.");
+        router.push("/"); // Redirect unauthorized users
       }
-      setPageLoading(false)
+      setPageLoading(false);
     }
-    checkAuthorization()
-  }, [router])
+    checkAuthorization();
+  }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
 
     try {
-      const supabase = createClient()
-      const { data: { user } } = await supabase.auth.getUser()
+      const supabase = createClient();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
       if (!user) {
-        router.push('/login')
-        return
+        router.push("/login");
+        return;
       }
 
       // Create property
       const { data: property, error: propertyError } = await supabase
-        .from('properties')
+        .from("properties")
         .insert({
           user_id: user.id, // Required field
           dealer_id: user.id, // Set dealer_id for dealer-specific queries
@@ -64,73 +66,80 @@ export default function NewPropertyPage() {
           bedrooms: formData.bedrooms ? Number(formData.bedrooms) : null,
           bathrooms: formData.bathrooms ? Number(formData.bathrooms) : null,
           furnishing: formData.furnishing || null,
-          approval_status: 'pending', // Set to pending by default for admin approval
+          approval_status: "pending", // Set to pending by default for admin approval
           featured: false,
         })
         .select()
-        .single()
+        .single();
 
-      if (propertyError) throw propertyError
+      if (propertyError) throw propertyError;
 
       // Upload images
       if (images.length > 0 && property) {
-        const imageUrls = []
+        const imageUrls = [];
         for (let i = 0; i < images.length; i++) {
-          const file = images[i]
-          const fileExt = file.name.split('.').pop()
-          const fileName = `${user.id}/${property.id}/${Date.now()}-${i}.${fileExt}`
+          const file = images[i];
+          const fileExt = file.name.split(".").pop();
+          const fileName = `${user.id}/${property.id}/${Date.now()}-${i}.${fileExt}`;
 
           const { error: uploadError, data } = await supabase.storage
-            .from('property-images')
-            .upload(fileName, file)
+            .from("property-images")
+            .upload(fileName, file);
 
           if (!uploadError) {
-            const { data: { publicUrl } } = supabase.storage
-              .from('property-images')
-              .getPublicUrl(fileName)
+            const {
+              data: { publicUrl },
+            } = supabase.storage.from("property-images").getPublicUrl(fileName);
 
             imageUrls.push({
               property_id: property.id,
               image_url: publicUrl,
               display_order: i,
-            })
+            });
           }
         }
 
         // Insert image records
         if (imageUrls.length > 0) {
-          await supabase.from('property_images').insert(imageUrls)
+          await supabase.from("property_images").insert(imageUrls);
         }
       }
 
-      alert('Property created successfully! It will be visible after admin approval.')
-      router.push('/dashboard')
+      alert(
+        "Property created successfully! It will be visible after admin approval.",
+      );
+      router.push("/dashboard");
     } catch (error: any) {
-      alert('Error creating property: ' + error.message)
+      alert("Error creating property: " + error.message);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setImages(Array.from(e.target.files).slice(0, 10))
+      setImages(Array.from(e.target.files).slice(0, 10));
     }
-  }
+  };
 
   if (pageLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
       </div>
-    )
+    );
   }
 
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">Add New Property</h1>
+      <h1 className="text-3xl font-bold text-gray-900 mb-8">
+        Add New Property
+      </h1>
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6 space-y-6">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white rounded-lg shadow-md p-6 space-y-6"
+      >
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Property Title *
@@ -140,7 +149,9 @@ export default function NewPropertyPage() {
             required
             className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={formData.title}
-            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, title: e.target.value })
+            }
             placeholder="e.g., Spacious 3 Bedroom House in DHA"
           />
         </div>
@@ -153,7 +164,9 @@ export default function NewPropertyPage() {
             rows={4}
             className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={formData.description}
-            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, description: e.target.value })
+            }
             placeholder="Describe the property features, amenities, etc."
           />
         </div>
@@ -167,7 +180,12 @@ export default function NewPropertyPage() {
               required
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={formData.property_type}
-              onChange={(e) => setFormData({ ...formData, property_type: e.target.value as any })}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  property_type: e.target.value as any,
+                })
+              }
             >
               <option value="house">House</option>
               <option value="apartment">Apartment</option>
@@ -178,13 +196,15 @@ export default function NewPropertyPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Price (PKR)
+              Price (GBP)
             </label>
             <input
               type="number"
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={formData.price}
-              onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, price: e.target.value })
+              }
               placeholder="e.g., 15000000"
             />
           </div>
@@ -200,7 +220,9 @@ export default function NewPropertyPage() {
               required
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={formData.city}
-              onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, city: e.target.value })
+              }
               placeholder="e.g., Karachi"
             />
           </div>
@@ -213,7 +235,9 @@ export default function NewPropertyPage() {
               type="text"
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={formData.area}
-              onChange={(e) => setFormData({ ...formData, area: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, area: e.target.value })
+              }
               placeholder="e.g., DHA Phase 5"
             />
           </div>
@@ -227,7 +251,9 @@ export default function NewPropertyPage() {
             type="text"
             className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={formData.address}
-            onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, address: e.target.value })
+            }
             placeholder="e.g., Street 12, Block A"
           />
         </div>
@@ -242,7 +268,9 @@ export default function NewPropertyPage() {
               min="0"
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={formData.bedrooms}
-              onChange={(e) => setFormData({ ...formData, bedrooms: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, bedrooms: e.target.value })
+              }
             />
           </div>
 
@@ -255,7 +283,9 @@ export default function NewPropertyPage() {
               min="0"
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={formData.bathrooms}
-              onChange={(e) => setFormData({ ...formData, bathrooms: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, bathrooms: e.target.value })
+              }
             />
           </div>
 
@@ -266,7 +296,9 @@ export default function NewPropertyPage() {
             <select
               className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={formData.furnishing}
-              onChange={(e) => setFormData({ ...formData, furnishing: e.target.value as any })}
+              onChange={(e) =>
+                setFormData({ ...formData, furnishing: e.target.value as any })
+              }
             >
               <option value="">Not Specified</option>
               <option value="furnished">Furnished</option>
@@ -288,7 +320,9 @@ export default function NewPropertyPage() {
             className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {images.length > 0 && (
-            <p className="text-sm text-gray-600 mt-2">{images.length} image(s) selected</p>
+            <p className="text-sm text-gray-600 mt-2">
+              {images.length} image(s) selected
+            </p>
           )}
         </div>
 
@@ -298,7 +332,7 @@ export default function NewPropertyPage() {
             disabled={loading}
             className="flex-1 bg-green-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-700 disabled:bg-gray-400"
           >
-            {loading ? 'Creating...' : 'Create Property'}
+            {loading ? "Creating..." : "Create Property"}
           </button>
           <button
             type="button"
@@ -310,5 +344,5 @@ export default function NewPropertyPage() {
         </div>
       </form>
     </div>
-  )
+  );
 }

@@ -1,83 +1,87 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-import { createClient } from '@/lib/supabase/client'
-import { Database } from '@/types/database.types'
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { createClient } from "@/lib/supabase/client";
+import { Database } from "@/types/database.types";
 
-type Property = Database['public']['Tables']['properties']['Row'] & {
-  property_images: { image_url: string }[]
-}
+type Property = Database["public"]["Tables"]["properties"]["Row"] & {
+  property_images: { image_url: string }[];
+};
 
 export default function DashboardPage() {
-  const router = useRouter()
-  const [properties, setProperties] = useState<Property[]>([])
-  const [loading, setLoading] = useState(true)
-  const [profile, setProfile] = useState<any>(null)
+  const router = useRouter();
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [profile, setProfile] = useState<any>(null);
 
   useEffect(() => {
-    checkAuth()
-  }, [])
+    checkAuth();
+  }, []);
 
   const checkAuth = async () => {
-    const supabase = createClient()
-    const { data: { user } } = await supabase.auth.getUser()
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
     if (!user) {
-      router.push('/login')
-      return
+      router.push("/login");
+      return;
     }
 
     const { data: profileData } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', user.id)
-      .single()
+      .from("profiles")
+      .select("*")
+      .eq("id", user.id)
+      .single();
 
-    if (profileData?.role !== 'dealer' && profileData?.role !== 'admin') {
-      router.push('/')
-      return
+    if (profileData?.role !== "dealer" && profileData?.role !== "admin") {
+      router.push("/");
+      return;
     }
 
-    setProfile(profileData)
-    fetchProperties(user.id)
-  }
+    setProfile(profileData);
+    fetchProperties(user.id);
+  };
 
   const fetchProperties = async (userId: string) => {
-    const supabase = createClient()
+    const supabase = createClient();
     const { data } = await supabase
-      .from('properties')
-      .select(`
+      .from("properties")
+      .select(
+        `
         *,
         property_images(image_url)
-      `)
-      .eq('user_id', userId)
-      .order('created_at', { ascending: false })
+      `,
+      )
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false });
 
     if (data) {
-      setProperties(data as any)
+      setProperties(data as any);
     }
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this property?')) return
+    if (!confirm("Are you sure you want to delete this property?")) return;
 
-    const supabase = createClient()
-    const { error } = await supabase.from('properties').delete().eq('id', id)
+    const supabase = createClient();
+    const { error } = await supabase.from("properties").delete().eq("id", id);
 
     if (!error) {
-      setProperties(properties.filter((p) => p.id !== id))
+      setProperties(properties.filter((p) => p.id !== id));
     }
-  }
+  };
 
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <div className="animate-spin rounded-full h-12 w-12 border-b-4 border-[#33a137]"></div>
       </div>
-    )
+    );
   }
 
   return (
@@ -98,7 +102,9 @@ export default function DashboardPage() {
       {properties.length === 0 ? (
         <div className="bg-white rounded-lg shadow-sm border border-[#c1bfbf]/30 p-12 text-center">
           <div className="text-6xl mb-4">🏘️</div>
-          <p className="text-[#767676] mb-4">You haven't listed any properties yet</p>
+          <p className="text-[#767676] mb-4">
+            You haven't listed any properties yet
+          </p>
           <Link
             href="/properties/new"
             className="inline-block bg-[#33a137] text-white px-6 py-3 rounded-lg font-bold hover:bg-[#2a8a2e] transition-all duration-200 shadow-sm hover:shadow-md"
@@ -133,43 +139,63 @@ export default function DashboardPage() {
             </thead>
             <tbody className="bg-white divide-y divide-[#c1bfbf]/30">
               {properties.map((property) => (
-                <tr key={property.id} className="hover:bg-[#f5f5f5]/50 transition-colors duration-150">
+                <tr
+                  key={property.id}
+                  className="hover:bg-[#f5f5f5]/50 transition-colors duration-150"
+                >
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <div className="flex-shrink-0 h-16 w-16">
                         <img
                           className="h-16 w-16 rounded object-cover border border-[#c1bfbf]/30"
-                          src={property.property_images[0]?.image_url || '/placeholder-property.svg'}
+                          src={
+                            property.property_images[0]?.image_url ||
+                            "/placeholder-property.svg"
+                          }
                           alt=""
                         />
                       </div>
                       <div className="ml-4">
-                        <div className="text-sm font-medium text-[#444444]">{property.title}</div>
-                        <div className="text-sm text-[#767676]">{property.city}</div>
+                        <div className="text-sm font-medium text-[#444444]">
+                          {property.title}
+                        </div>
+                        <div className="text-sm text-[#767676]">
+                          {property.city}
+                        </div>
                       </div>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="capitalize text-sm text-[#444444]">{property.property_type}</span>
+                    <span className="capitalize text-sm text-[#444444]">
+                      {property.property_type}
+                    </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-[#33a137]">
-                    PKR {property.price?.toLocaleString()}
+                    GBP {property.price?.toLocaleString()}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full capitalize ${
-                      property.status === 'available' ? 'bg-green-100 text-green-800' :
-                      property.status === 'sold' ? 'bg-red-100 text-red-800' :
-                      'bg-yellow-100 text-yellow-800'
-                    }`}>
+                    <span
+                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full capitalize ${
+                        property.status === "available"
+                          ? "bg-green-100 text-green-800"
+                          : property.status === "sold"
+                            ? "bg-red-100 text-red-800"
+                            : "bg-yellow-100 text-yellow-800"
+                      }`}
+                    >
                       {property.status}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full capitalize ${
-                      property.approval_status === 'approved' ? 'bg-green-100 text-green-800' :
-                      property.approval_status === 'rejected' ? 'bg-red-100 text-red-800' :
-                      'bg-yellow-100 text-yellow-800'
-                    }`}>
+                    <span
+                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full capitalize ${
+                        property.approval_status === "approved"
+                          ? "bg-green-100 text-green-800"
+                          : property.approval_status === "rejected"
+                            ? "bg-red-100 text-red-800"
+                            : "bg-yellow-100 text-yellow-800"
+                      }`}
+                    >
                       {property.approval_status}
                     </span>
                   </td>
@@ -200,5 +226,5 @@ export default function DashboardPage() {
         </div>
       )}
     </div>
-  )
+  );
 }

@@ -694,7 +694,7 @@ export default function AdminPage() {
                               {property.title}
                             </h3>
                             <p className="text-lg font-bold text-blue-600 mb-2">
-                              PKR {property.price?.toLocaleString()}
+                              GBP {property.price?.toLocaleString()}
                             </p>
                             <p className="text-gray-600 mb-2">
                               {property.city}

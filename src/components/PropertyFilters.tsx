@@ -4,56 +4,59 @@
 // - Responsive grid layout
 // - Subtle borders and shadows
 
-'use client'
+"use client";
 
-import { useState } from 'react'
+import { useState } from "react";
 
 interface Filters {
-  propertyType: string
-  city: string
-  minPrice: string
-  maxPrice: string
-  bedrooms: string
-  furnishing: string
-  sortBy: string
+  propertyType: string;
+  city: string;
+  minPrice: string;
+  maxPrice: string;
+  bedrooms: string;
+  furnishing: string;
+  sortBy: string;
 }
 
 interface PropertyFiltersProps {
-  onFilterChange: (filters: Filters) => void
+  onFilterChange: (filters: Filters) => void;
 }
 
 const cities = [
-  'All Cities',
-  'Karachi',
-  'Lahore',
-  'Islamabad',
-  'Rawalpindi',
-  'Faisalabad',
-  'Multan',
-  'Peshawar',
-  'Quetta',
-  'Sialkot',
-  'Gujranwala',
-]
+  "All Cities",
+  "Karachi",
+  "Lahore",
+  "Islamabad",
+  "Rawalpindi",
+  "Faisalabad",
+  "Multan",
+  "Peshawar",
+  "Quetta",
+  "Sialkot",
+  "Gujranwala",
+];
 
-export default function PropertyFilters({ onFilterChange }: PropertyFiltersProps) {
+export default function PropertyFilters({
+  onFilterChange,
+}: PropertyFiltersProps) {
   const [filters, setFilters] = useState<Filters>({
-    propertyType: '',
-    city: '',
-    minPrice: '',
-    maxPrice: '',
-    bedrooms: '',
-    furnishing: '',
-    sortBy: 'created_at',
-  })
+    propertyType: "",
+    city: "",
+    minPrice: "",
+    maxPrice: "",
+    bedrooms: "",
+    furnishing: "",
+    sortBy: "created_at",
+  });
 
   const handleFilterChange = (key: keyof Filters, value: string) => {
-    const newFilters = { ...filters, [key]: value }
-    setFilters(newFilters)
-    onFilterChange(newFilters)
-  }
+    const newFilters = { ...filters, [key]: value };
+    setFilters(newFilters);
+    onFilterChange(newFilters);
+  };
 
-  const inputClassName = "w-full border border-[#c1bfbf] rounded px-3 py-2.5 text-sm text-[#444444] focus:outline-none focus:ring-2 focus:ring-[#33a137] focus:border-transparent transition-all"
+  const inputClassName =
+    "w-full border border-[#c1bfbf] rounded px-3 py-2.5 text-sm text-[#444444] focus:outline-none focus:ring-2 focus:ring-[#33a137] focus:border-transparent transition-all";
 
   return (
     <div className="bg-white p-5 rounded-lg shadow-sm mb-6 border border-[#c1bfbf]/30">
@@ -62,16 +65,16 @@ export default function PropertyFilters({ onFilterChange }: PropertyFiltersProps
         <button
           onClick={() => {
             const resetFilters = {
-              propertyType: '',
-              city: '',
-              minPrice: '',
-              maxPrice: '',
-              bedrooms: '',
-              furnishing: '',
-              sortBy: 'created_at',
-            }
-            setFilters(resetFilters)
-            onFilterChange(resetFilters)
+              propertyType: "",
+              city: "",
+              minPrice: "",
+              maxPrice: "",
+              bedrooms: "",
+              furnishing: "",
+              sortBy: "created_at",
+            };
+            setFilters(resetFilters);
+            onFilterChange(resetFilters);
           }}
           className="text-sm text-[#767676] hover:text-[#33a137] transition-colors duration-200"
         >
@@ -86,7 +89,7 @@ export default function PropertyFilters({ onFilterChange }: PropertyFiltersProps
           <select
             className={inputClassName}
             value={filters.propertyType}
-            onChange={(e) => handleFilterChange('propertyType', e.target.value)}
+            onChange={(e) => handleFilterChange("propertyType", e.target.value)}
           >
             <option value="">All Types</option>
             <option value="house">House</option>
@@ -103,10 +106,10 @@ export default function PropertyFilters({ onFilterChange }: PropertyFiltersProps
           <select
             className={inputClassName}
             value={filters.city}
-            onChange={(e) => handleFilterChange('city', e.target.value)}
+            onChange={(e) => handleFilterChange("city", e.target.value)}
           >
             {cities.map((city) => (
-              <option key={city} value={city === 'All Cities' ? '' : city}>
+              <option key={city} value={city === "All Cities" ? "" : city}>
                 {city}
               </option>
             ))}
@@ -120,7 +123,7 @@ export default function PropertyFilters({ onFilterChange }: PropertyFiltersProps
           <select
             className={inputClassName}
             value={filters.bedrooms}
-            onChange={(e) => handleFilterChange('bedrooms', e.target.value)}
+            onChange={(e) => handleFilterChange("bedrooms", e.target.value)}
           >
             <option value="">Any</option>
             <option value="1">1+</option>
@@ -138,7 +141,7 @@ export default function PropertyFilters({ onFilterChange }: PropertyFiltersProps
           <select
             className={inputClassName}
             value={filters.furnishing}
-            onChange={(e) => handleFilterChange('furnishing', e.target.value)}
+            onChange={(e) => handleFilterChange("furnishing", e.target.value)}
           >
             <option value="">Any</option>
             <option value="furnished">Furnished</option>
@@ -149,26 +152,26 @@ export default function PropertyFilters({ onFilterChange }: PropertyFiltersProps
 
         <div>
           <label className="block text-sm font-medium text-[#444444] mb-2">
-            Min Price (PKR)
+            Min Price (GBP)
           </label>
           <input
             type="number"
             className={inputClassName}
             value={filters.minPrice}
-            onChange={(e) => handleFilterChange('minPrice', e.target.value)}
+            onChange={(e) => handleFilterChange("minPrice", e.target.value)}
             placeholder="Any"
           />
         </div>
 
         <div>
           <label className="block text-sm font-medium text-[#444444] mb-2">
-            Max Price (PKR)
+            Max Price (GBP)
           </label>
           <input
             type="number"
             className={inputClassName}
             value={filters.maxPrice}
-            onChange={(e) => handleFilterChange('maxPrice', e.target.value)}
+            onChange={(e) => handleFilterChange("maxPrice", e.target.value)}
             placeholder="Any"
           />
         </div>
@@ -180,7 +183,7 @@ export default function PropertyFilters({ onFilterChange }: PropertyFiltersProps
           <select
             className={inputClassName}
             value={filters.sortBy}
-            onChange={(e) => handleFilterChange('sortBy', e.target.value)}
+            onChange={(e) => handleFilterChange("sortBy", e.target.value)}
           >
             <option value="created_at">Newest First</option>
             <option value="price_asc">Price: Low to High</option>
@@ -189,5 +192,5 @@ export default function PropertyFilters({ onFilterChange }: PropertyFiltersProps
         </div>
       </div>
     </div>
-  )
+  );
 }
